@@ -8,16 +8,17 @@ package com.ipn.mx.modelo.dao;
 import com.ipn.mx.modelo.dto.CategoriaDTO;
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
+// import javax.naming.Context;
+// import javax.naming.InitialContext;
+// import javax.naming.NamingException;
+// import javax.sql.DataSource;
 
 /**
  *
@@ -25,26 +26,42 @@ import javax.sql.DataSource;
  */
 public class CategoriaDAO {
 
-    private static final String SQL_INSERT = "{call spInsertarCategoria(?, ?)}";
-    private static final String SQL_UPDATE = "{call spActualizarCategoria(?, ?, ?)}";
-    private static final String SQL_DELETE = "{call spBorrarCategoria(?)}";
-    private static final String SQL_SELECT = "{call spVerCategoria(?)}";
-    private static final String SQL_SELECT_ALL = "{call spMostrarCategorias()}";
+    private static final String SQL_INSERT = "{ call spInsertarCategoria(?, ?) }";
+    private static final String SQL_UPDATE = "{ call spActualizarCategoria(?, ?, ?) }";
+    private static final String SQL_DELETE = "{ call spBorrarCategoria(?) }";
+    private static final String SQL_SELECT = "{ call spVerCategoria(?) }";
+    private static final String SQL_SELECT_ALL = "{ call spMostrarCategorias() }";
+
 
     private Connection con;
 
-    private void getConnection() {
-        Context ic;
-        Context ec;
-        String resourceDataSource = "jdbc/3cm9";
+    // public Connection getConnection() {
+    // Context ic;
+    // Context ec;
+    // String resourceDataSource = "jdbc/3cm9";
+    // try {
+    // ic = new InitialContext();
+    // ec = (Context) ic.lookup("java:comp/env");
+    // DataSource ds = (DataSource) ec.lookup(resourceDataSource);
+    // con = ds.getConnection();
+    // } catch (NamingException | SQLException ex) {
+    // Logger.getLogger(CategoriaDAO.class.getName()).log(Level.SEVERE, null, ex);
+    // }
+    // return con;
+    // }
+
+    public Connection getConnection() {
+        String user = "postgres";
+        String pwd = "n0m3l0s3";
+        String url = "jdbc:postgresql://localhost:5432/db3cm9";
+        String driver = "org.postgresql.Driver";
         try {
-            ic = new InitialContext();
-            ec = (Context) ic.lookup("java:comp/env");
-            DataSource ds = (DataSource) ec.lookup(resourceDataSource);
-            con = ds.getConnection();
-        } catch (NamingException | SQLException ex) {
+            Class.forName(driver);
+            con = DriverManager.getConnection(url, user, pwd);
+        } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(CategoriaDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return con;
     }
 
     public void create(CategoriaDTO dto) throws SQLException {
@@ -100,7 +117,7 @@ public class CategoriaDAO {
             }
         }
     }
-    
+
     public CategoriaDTO read(CategoriaDTO dto) throws SQLException {
         this.getConnection();
         CallableStatement cs = null;
@@ -110,11 +127,11 @@ public class CategoriaDAO {
             cs.setInt(1, dto.getEntidad().getIdCategoria());
             rs = cs.executeQuery();
             List results = getResults(rs);
-            
-            if(results.size() > 0)
+
+            if (results.size() > 0)
                 return (CategoriaDTO) results.get(0);
         } finally {
-            if(rs != null){
+            if (rs != null) {
                 rs.close();
             }
             if (cs != null) {
@@ -126,7 +143,7 @@ public class CategoriaDAO {
         }
         return null;
     }
-    
+
     public List readAll() throws SQLException {
         this.getConnection();
         CallableStatement cs = null;
@@ -135,11 +152,11 @@ public class CategoriaDAO {
             cs = con.prepareCall(SQL_SELECT_ALL);
             rs = cs.executeQuery();
             List results = getResults(rs);
-            
-            if(results.size() > 0)
+
+            if (results.size() > 0)
                 return results;
         } finally {
-            if(rs != null){
+            if (rs != null) {
                 rs.close();
             }
             if (cs != null) {
@@ -154,7 +171,7 @@ public class CategoriaDAO {
 
     private List getResults(ResultSet rs) throws SQLException {
         List results = new ArrayList();
-        while(rs.next()){
+        while (rs.next()) {
             CategoriaDTO dto = new CategoriaDTO();
             dto.getEntidad().setIdCategoria(rs.getInt("idCategoria"));
             dto.getEntidad().setNombreCategoria(rs.getString("nombreCategoria"));
@@ -163,5 +180,5 @@ public class CategoriaDAO {
         }
         return results;
     }
-    
+
 }

@@ -7,17 +7,20 @@ package com.ipn.mx.controlador.web;
 
 import com.ipn.mx.modelo.dao.CategoriaDAO;
 import com.ipn.mx.modelo.dto.CategoriaDTO;
+import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperRunManager;
 
 /**
  *
@@ -162,4 +165,27 @@ public class CategoriaServlet extends HttpServlet {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+//    private PieDataSet getGraficaProductos() {
+//    }
+    private void verPDF(HttpServletRequest request, HttpServletResponse response) {
+        ServletOutputStream sos = null;
+        try {
+            CategoriaDAO dao = new CategoriaDAO();
+            sos = response.getOutputStream();
+            File reporte = new File(getServletConfig().getServletContext().getRealPath("/reportes/Categorias.jasper"));
+            byte[] bytes = JasperRunManager.runReportToPdf(reporte.getPath(), null, dao.getConnection());
+            response.setContentType("application/pdf");
+            response.setContentLength(bytes.length);
+
+            sos.write(bytes, 0, 0);
+        } catch (IOException | JRException ex) {
+            Logger.getLogger(CategoriaServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                sos.close();
+            } catch (IOException ex) {
+                Logger.getLogger(CategoriaServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
 }
