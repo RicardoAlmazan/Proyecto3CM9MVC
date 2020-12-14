@@ -50,10 +50,24 @@ public class CategoriaDAO {
     // return con;
     // }
 
+    // public Connection getConnection() {
+    //     String user = "postgres";
+    //     String pwd = "n0m3l0s3";
+    //     String url = "jdbc:postgresql://localhost:5432/db3cm9";
+    //     String driver = "org.postgresql.Driver";
+    //     try {
+    //         Class.forName(driver);
+    //         con = DriverManager.getConnection(url, user, pwd);
+    //     } catch (ClassNotFoundException | SQLException ex) {
+    //         Logger.getLogger(CategoriaDAO.class.getName()).log(Level.SEVERE, null, ex);
+    //     }
+    //     return con;
+    // }
+
     public Connection getConnection() {
-        String user = "postgres";
-        String pwd = "n0m3l0s3";
-        String url = "jdbc:postgresql://localhost:5432/db3cm9";
+        String user = "uqynzbofzainfs";
+        String pwd = "5cda7ba65ce743927702243a03891967dd3436f1d7286f95ab77decf16ba039a";
+        String url = "jdbc:postgresql://ec2-52-44-235-121.compute-1.amazonaws.com:5432/d1kjq1s95jhf07";
         String driver = "org.postgresql.Driver";
         try {
             Class.forName(driver);
