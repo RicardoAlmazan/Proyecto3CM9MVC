@@ -1,11 +1,12 @@
 <%-- 
-    Document   : categoriaForm
-    Created on : 25 nov. 2020, 10:52:46
+    Document   : listUsers
+    Created on : 13 dic. 2020, 23:01:35
     Author     : Iikt
 --%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page errorPage="error.jsp?de=listusr.jsp"%>
 <%
     if (session.getAttribute("idUsuario") == null)
         response.sendRedirect("login.jsp");
@@ -14,7 +15,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Categor&iacute;a Form</title>
+        <title>Listado de Usuarios</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     </head>
     <body>
@@ -68,39 +69,60 @@
                     </div>
                 </div>
             </nav>
-
-            <div>
-                <div class="card-header bg-dark">
-                    <h3 class="text-white">Datos de la categor&iacute;a</h3>
-                </div>
-                <div class="card-body">
-                    <form action="CategoriaServlet?accion=guardar" method="post" name="frmCategoriaForm" id="frmCategoriaForm">
-                        <input type="hidden" name="id" id="id" value="<c:out value="${dto.entidad.idCategoria}"/>"/>
-                        <div class="form-group row">
-                            <div class="col-sm-6">
-                                <label class="col-sm-2 col-form-label">Nombre</label>
-                            </div>
-                            <div class="col-sm-6">
-                                <input type="text" name="txtNombre" id="txtNombre" maxlength="50" required="true" placeholder="Nombre de la categor&iacute;a"
-                                       class="form-control" value="<c:out value="${dto.entidad.nombreCategoria}"/>"/>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-sm-6">
-                                <label class="col-sm-2 col-form-label">Descripci&oacute;n</label>
-                            </div>
-                            <div class="col-sm-6">
-                                <input type="text" name="txtDescripcion" id="txtDescripcion" maxlength="50" required="true" placeholder="Descripci&oacute;n de la categor&iacute;a"
-                                       class="form-control" value="<c:out value="${dto.entidad.descripcionCategoria}"/>"/>
-                            </div>
-                        </div>
-                        <a class="btn btn-secondary" href="CategoriaServlet?accion=listaCategorias">
-                            Regresar
-                        </a>
-                        <button type="submit" class="btn btn-success">Aceptar</button>
-                    </form>
-                </div>
-            </div>
+            <table class="table table-bordered table-hover table-dark">
+                <thead>
+                    <tr>
+                        <th>Id Usuario</th>
+                        <th>Nombre</th>
+                        <th>Apellido paterno</th>
+                        <th>Apellido materno</th>
+                        <th>Correo electrónico</th>
+                        <th>Nombre de usuario</th>
+                        <th>Tipo de usuario</th>
+                        <th>Eliminar</th>
+                        <th>Actualizar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach var="usr" items="${listaUsuarios}">
+                        <tr>
+                            <td>
+                                <a class="btn btn-info" href="UsuariosServlet?accion=verPerfil&id=<c:out value="${usr.entidad.idUsuario}"/>">
+                                    <c:out value="${usr.entidad.idUsuario}"/>
+                                </a>
+                            </td>
+                            <td>
+                                <c:out value="${usr.entidad.nombre}"/>
+                            </td>  
+                            <td>
+                                <c:out value="${usr.entidad.paterno}"/>
+                            </td>
+                            <td>
+                                <c:out value="${usr.entidad.materno}"/>
+                            </td>
+                            <td>
+                                <c:out value="${usr.entidad.email}"/>
+                            </td>
+                            <td>
+                                <c:out value="${usr.entidad.nombreUsuario}"/>
+                            </td>
+                            <td>
+                                <c:out value="${usr.entidad.tipoUsuario}"/>
+                            </td>
+                            <td>
+                                <a class="btn btn-danger" href="UsuariosServlet?accion=eliminar&id=<c:out value="${usr.entidad.idUsuario}"/>">
+                                    Eliminar
+                                </a>
+                            </td>
+                            <td>
+                                <a class="btn btn-warning" href="UsuariosServlet?accion=actualizar&id=<c:out value="${usr.entidad.idUsuario}"/>">
+                                    Actualizar
+                                </a>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
         </div>
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" ></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" ></script>

@@ -79,6 +79,7 @@
                         <li class="list-group-item"><b>Apellido paterno: </b> <c:out value="${usr.entidad.paterno}"/></li>
                         <li class="list-group-item"><b>Apellido materno </b> <c:out value="${usr.entidad.materno}"/></li>
                         <li class="list-group-item"><b>Correo electr&oacute;nico: </b> <c:out value="${usr.entidad.email}"/></li>
+                        <li class="list-group-item"><b>Tipo de usuario: </b> <c:out value="${usr.entidad.tipoUsuario}"/></li>
                     </ul>
                 </div>
             </div>

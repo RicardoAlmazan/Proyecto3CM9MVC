@@ -163,6 +163,31 @@ public class UsuarioDAO {
         }
         return null;
     }
+    
+    public List readAll() throws SQLException {
+        this.getConnection();
+        CallableStatement cs = null;
+        ResultSet rs = null;
+        try {
+            cs = con.prepareCall(SQL_SELECT_ALL);
+            rs = cs.executeQuery();
+            List results = getResults(rs);
+
+            if (results.size() > 0)
+                return results;
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (cs != null) {
+                cs.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return null;
+    }
 
     private List getResults(ResultSet rs) throws SQLException {
         List results = new ArrayList();

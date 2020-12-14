@@ -82,7 +82,7 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-sm-6">
-                                <label class="col-sm-2 col-form-label">Apellido paterno</label>
+                                <label class="col-sm-4 col-form-label">Apellido paterno</label>
                             </div>
                             <div class="col-sm-6">
                                 <input type="text" name="txtPaterno" id="txtPaterno" maxlength="50" required="true" placeholder="Apellido paterno"
@@ -91,14 +91,41 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-sm-6">
-                                <label class="col-sm-2 col-form-label">Apellido materno</label>
+                                <label class="col-sm-4 col-form-label">Apellido materno</label>
                             </div>
                             <div class="col-sm-6">
                                 <input type="text" name="txtMaterno" id="txtMaterno" maxlength="50" required="true" placeholder="Apellido materno"
                                        class="form-control" value="<c:out value="${dto.entidad.materno}"/>"/>
                             </div>
                         </div>
-                        <a class="btn btn-secondary" href="CategoriaServlet?accion=listaCategorias">
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <label class="col-sm-4 col-form-label">Correo electr&oacute;nico</label>
+                            </div>
+                            <div class="col-sm-6">
+                                <input type="text" name="txtEmail" id="txtEmail" maxlength="50" required="true" placeholder="Correo electrónico"
+                                       class="form-control" value="<c:out value="${dto.entidad.email}"/>"/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <label class="col-sm-4 col-form-label">Nombre Usuario</label>
+                            </div>
+                            <div class="col-sm-6">
+                                <input type="text" name="txtUsername" id="txtUsername" maxlength="50" required="true" placeholder="Nombre de usuario"
+                                       class="form-control" value="<c:out value="${dto.entidad.nombreUsuario}"/>"/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <label class="col-sm-4 col-form-label">Contraseña</label>
+                            </div>
+                            <div class="col-sm-6">
+                                <input type="password" name="txtPassword" id="txtPassword" maxlength="50" required="true" placeholder="Contraseña"
+                                       class="form-control" value="<c:out value="${dto.entidad.claveUsuario}"/>"/>
+                            </div>
+                        </div>        
+                        <a class="btn btn-secondary" href="UsuariosServlet?accion=listaUsuarios">
                             Regresar
                         </a>
                         <button type="submit" class="btn btn-success">Aceptar</button>

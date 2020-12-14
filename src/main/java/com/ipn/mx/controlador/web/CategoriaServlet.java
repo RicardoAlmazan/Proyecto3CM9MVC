@@ -181,7 +181,6 @@ public class CategoriaServlet extends HttpServlet {
         dto.getEntidad().setDescripcionCategoria(request.getParameter("txtDescripcion"));
 
         try {
-            System.out.println(request.getParameter("id"));
             if (request.getParameter("id") != null && request.getParameter("id") != "") {
                 dto.getEntidad().setIdCategoria(Integer.parseInt(request.getParameter("id")));
                 dao.update(dto);

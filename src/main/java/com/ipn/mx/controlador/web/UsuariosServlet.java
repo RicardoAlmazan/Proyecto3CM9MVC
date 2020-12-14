@@ -10,6 +10,7 @@ import com.ipn.mx.modelo.dao.UsuarioDAO;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -41,6 +42,8 @@ public class UsuariosServlet extends HttpServlet {
             registrarUsuario(request, response);
         } else if (accion.equals("guardar")) {
             almacenarUsuario(request, response);
+        } else if (accion.equals("listaUsuarios")) {
+            listaUsuarios(request, response);
         }
     }
 
@@ -154,7 +157,45 @@ public class UsuariosServlet extends HttpServlet {
     }
 
     private void almacenarUsuario(HttpServletRequest request, HttpServletResponse response) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        UsuarioDAO dao = new UsuarioDAO();
+        UsuarioDTO dto = new UsuarioDTO();
+
+        dto.getEntidad().setNombre(request.getParameter("txtNombre"));
+        dto.getEntidad().setPaterno(request.getParameter("txtPaterno"));
+        dto.getEntidad().setMaterno(request.getParameter("txtMaterno"));
+        dto.getEntidad().setEmail(request.getParameter("txtEmail"));
+        dto.getEntidad().setNombreUsuario(request.getParameter("txtUsername"));
+
+        try {
+            if (request.getParameter("id") != null && request.getParameter("id") != "") {
+                dto.getEntidad().setIdUsuario(Integer.parseInt(request.getParameter("id")));
+                dao.update(dto);
+            } else {
+                dto.getEntidad().setClaveUsuario(request.getParameter("txtPassword"));
+                dto.getEntidad().setTipoUsuario("Cliente");
+                dao.create(dto);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuariosServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        try {
+            response.sendRedirect("UsuariosServlet?accion=listaUsuarios");
+        } catch (IOException ex) {
+            Logger.getLogger(CategoriaServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void listaUsuarios(HttpServletRequest request, HttpServletResponse response) {
+        UsuarioDAO dao = new UsuarioDAO();
+        try {
+            List lista = dao.readAll();
+            request.setAttribute("listaUsuarios", lista);
+            RequestDispatcher vista = request.getRequestDispatcher("listUsers.jsp");
+            vista.forward(request, response);
+        } catch (SQLException | ServletException | IOException ex) {
+            Logger.getLogger(CategoriaServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

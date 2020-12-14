@@ -49,7 +49,7 @@
                                 Iniciar sesión
                             </button>
                         </div>
-
+                        <!--
                         <div class="text-center p-t-45 p-b-4">
                             <span class="txt1">
                                 Olvidó
@@ -59,13 +59,14 @@
                                 Usuario / Contraseña?
                             </a>
                         </div>
-
+                        -->
+                        <br>
                         <div class="text-center">
                             <span class="txt1">
                                 ¿No tienes una cuenta?
                             </span>
 
-                            <a href="#" class="txt2 hov1">
+                            <a href="UsuariosServlet?accion=nuevo" class="txt2 hov1">
                                 Registrarse
                             </a>
                         </div>
@@ -81,7 +82,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.5/daterangepicker.min.js" ></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/countdown/2.6.0/countdown.min.js" ></script>
-        
+
         <script src="assets/js/main.js"></script>
     </body>
 </html>
