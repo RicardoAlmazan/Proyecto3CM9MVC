@@ -6,6 +6,10 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+    if (session.getAttribute("idUsuario") == null)
+        response.sendRedirect("login.jsp");
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -19,7 +23,7 @@
                 <nav class="navbar navbar-dark bg-dark">
                     <a class="navbar-brand" href="#">
                         <img src="assets/img/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt="" >
-                        Categor&iacute;as
+                        TRAAF Store
                     </a>
                 </nav>
 
@@ -29,13 +33,39 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="CategoriaServlet?accion=listaCategorias">Lista de categor&iacute;as</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Categor&iacute;as
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="CategoriaServlet?accion=listaCategorias">Lista de categor&iacute;as</a>
+                                <a class="dropdown-item" href="CategoriaServlet?accion=nuevo">Registrar categor&iacute;a</a>
+                                <a class="dropdown-item" href="CategoriaServlet?accion=generarReporte">Generar reporte</a>
+                            </div>
                         </li>
-                        <li class="nav-item active">
-                            <a class="nav-link" href="CategoriaServlet?accion=nuevo">Registrar categor&iacute;a <span class="sr-only">(current)</span></a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Productos
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="ProductosServlet?accion=listaProductos">Lista de productos</a>
+                                <a class="dropdown-item" href="ProductosServlet?accion=nuevo">Registrar producto</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Productos
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="UsuariosServlet?accion=listaUsuarios">Lista de usuarios</a>
+                                <a class="dropdown-item" href="UsuariosServlet?accion=nuevo">Registrar usuario</a>
+                            </div>
                         </li>
                     </ul>
+                    <div class="form-inline my-2 my-lg-0">
+                        <a class="navbar-brand" href="UsuariosServlet?accion=verPerfil"><c:out value="${sessionScope.nombreUsuario}"/></a>
+                        <a class="btn btn-danger" href="UsuariosServlet?accion=logout">Cerrar sesión</a>
+                    </div>
                 </div>
             </nav>
 
@@ -64,6 +94,10 @@
                                        class="form-control" value="<c:out value="${dto.entidad.descripcionCategoria}"/>"/>
                             </div>
                         </div>
+                        <a class="btn btn-secondary" href="CategoriaServlet?accion=listaCategorias">
+                            Regresar
+                        </a>
+                        <button type="submit" class="btn btn-success">Aceptar</button>
                     </form>
                 </div>
             </div>

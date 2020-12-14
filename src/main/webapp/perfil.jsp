@@ -1,10 +1,15 @@
 <%-- 
-    Document   : index
-    Created on : 20 nov. 2020, 10:46:57
+    Document   : perfil
+    Created on : 13 dic. 2020, 20:39:17
     Author     : Iikt
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+    if (session.getAttribute("idUsuario") == null)
+        response.sendRedirect("login.jsp");
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -58,15 +63,28 @@
                         </li>
                     </ul>
                     <div class="form-inline my-2 my-lg-0">
-                        <a class="navbar-brand" href="UsuariosServlet?accion=verPerfil"><c:out value="${usr.entidad.nombreUsuario}"/></a>
+                        <a class="navbar-brand" href="UsuariosServlet?accion=verPerfil"><c:out value="${sessionScope.nombreUsuario}"/></a>
                         <a class="btn btn-danger" href="UsuariosServlet?accion=logout">Cerrar sesión</a>
                     </div>
                 </div>
             </nav>
+
+            <div class="card border-dark mb-3">
+                <div class="card-header">
+                    <h3>Datos de usuario</h3>
+                </div>
+                <div class="card-body text-dark">
+                    <ul class="list-group">
+                        <li class="list-group-item"><b>Nombre: </b> <c:out value="${usr.entidad.nombre}"/></li>
+                        <li class="list-group-item"><b>Apellido paterno: </b> <c:out value="${usr.entidad.paterno}"/></li>
+                        <li class="list-group-item"><b>Apellido materno </b> <c:out value="${usr.entidad.materno}"/></li>
+                        <li class="list-group-item"><b>Correo electr&oacute;nico: </b> <c:out value="${usr.entidad.email}"/></li>
+                    </ul>
+                </div>
+            </div>
 
         </div>
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" ></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" ></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" ></script>
     </body>
-</html>

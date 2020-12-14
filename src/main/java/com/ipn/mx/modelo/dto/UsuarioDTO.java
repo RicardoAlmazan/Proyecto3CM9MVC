@@ -6,15 +6,17 @@ import com.ipn.mx.modelo.entidades.Usuario;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 public class UsuarioDTO implements Serializable {
 
     private Usuario entidad;
 
+    public UsuarioDTO() {
+        this.entidad = new Usuario();
+    }
+    
     @Override
     public String toString() {
         return "Id: " + entidad.getIdUsuario()
